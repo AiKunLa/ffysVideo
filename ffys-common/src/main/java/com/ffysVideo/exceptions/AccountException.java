@@ -3,11 +3,11 @@ package com.ffysVideo.exceptions;
 /**
  * 用户登录异常
  */
-public class UserLoginException extends RuntimeException{
-    public UserLoginException() {
+public class AccountException extends RuntimeException{
+    public AccountException() {
         super();
     }
-    public UserLoginException(String message) {
+    public AccountException(String message) {
         super(message);
     }
 }

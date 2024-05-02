@@ -1,9 +1,8 @@
-package com.ffysVideo.filter;
+package com.ffysVideo.config.filter;
 
 import com.ffysVideo.constant.JwtClaimsConstant;
 import com.ffysVideo.entity.LoginUser;
 import com.ffysVideo.entity.User;
-import com.ffysVideo.properties.JwtProperties;
 import com.ffysVideo.utils.JwtUtil;
 import com.ffysVideo.utils.RedisUtils;
 import io.jsonwebtoken.Claims;
@@ -25,11 +24,12 @@ import java.util.Objects;
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
-    @Resource
-    private JwtProperties jwtProperties;
 
     @Resource
     private RedisUtils redisUtils;
+
+    @Resource
+    private JwtUtil jwtUtil;
 
     /**
      * jwt 请求头校验
@@ -43,7 +43,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //获取请求同中的token
-        String token = request.getHeader(jwtProperties.getUserTokenName());
+        String token = request.getHeader(jwtUtil.tokenName);
 
         //判断是否为空  为空就放行 给后面的过滤器
         if (token == null) {
@@ -53,27 +53,30 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         //解析token
         try {
             //解析token
-            Claims claims = JwtUtil.parseJWT(jwtProperties.getUserSecretKey(), token);
+            Claims claims = jwtUtil.parseJWT(token);
             //获取token中的userId
             String userId = claims.get(JwtClaimsConstant.USER_ID).toString();
 
             //从redis获取用户信息
             User user = (User) redisUtils.get("login:" + userId);
 
-            if (Objects.nonNull(user)) { //不为空将 将用户信息存入SecurityContextHandler
-                //
-                LoginUser loginUser = new LoginUser(user);
-
-                UsernamePasswordAuthenticationToken authenticationToken =
-                        new UsernamePasswordAuthenticationToken(loginUser, null, null);
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            if (Objects.isNull(user)) {
+                throw new RemoteException("用户未登录");
             }
+
+            //不为空将 将用户信息存入SecurityContextHandler
+            LoginUser loginUser = new LoginUser(user);
+
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(loginUser, null, null);
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
 
             //放行 若SecurityContextHandler 中没有信息，在后面的过滤器中无法通过
             filterChain.doFilter(request, response);
         } catch (Exception e) {
             response.setStatus(401);
-            throw new AuthenticationException("用户未登录");
+            throw new RuntimeException("用户未登录");
         }
 
     }

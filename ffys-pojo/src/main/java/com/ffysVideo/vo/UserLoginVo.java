@@ -1,2 +1,25 @@
-package com.ffysVideo.vo;public class UserLoginVo {
+package com.ffysVideo.vo;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+//@ApiModel(description = "员工登录返回的数据格式")
+public class UserLoginVo {
+//    @ApiModelProperty("主键值")
+    private Long id;
+
+//    @ApiModelProperty("用户名")
+    private String userName;
+
+//    @ApiModelProperty("姓名")
+    private String name;
+
+//    @ApiModelProperty("jwt令牌")
+    private String token;
 }

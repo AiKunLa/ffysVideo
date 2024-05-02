@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  #    允许循环依赖
+  main:
+    allow-circular-references: true
+  datasource:
+    type: ${ffys.datasource.type}
+    driver-class-name: ${ffys.datasource.driver}
+    url: jdbc:mysql://${ffys.datasource.host}:${ffys.datasource.port}/${ffys.datasource.database}
+    username: ${ffys.datasource.username}
+    password: ${ffys.datasource.password}
+  #redis
+  redis:
+    #数据库 0 ~ 15
+    database: ${ffys.redis.database}
+    host: ${ffys.redis.host}
+    port: ${ffys.redis.port}
+    #redis 连接池
+#    jedis:
+#      pool:
+#        min-idle: 1
+#
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+

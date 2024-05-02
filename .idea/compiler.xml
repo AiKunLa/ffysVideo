@@ -2,18 +2,24 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ffysVideo" />
+        <module name="ffys-pojo" />
+        <module name="ffys-server" />
+        <module name="ffys-common" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="ffysVideo" options="-parameters" />
+      <module name="ffys-common" options="-parameters" />
+      <module name="ffys-pojo" options="-parameters" />
+      <module name="ffys-server" options="-parameters" />
+      <module name="ffysVideo" options="" />
     </option>
   </component>
 </project>

@@ -1,0 +1,20 @@
+ffys:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver: com.mysql.cj.jdbc.Driver
+    host: localhost
+    port: 3306
+    database: ffys
+    username: root
+    password: 4718
+
+  jwt:
+    # 用户jwt配置
+    user-secret-key: ffys
+    user-ttl: 36000000
+    user-token-name: token
+
+  redis:
+    database: 0
+    host: localhost
+    port: 6379

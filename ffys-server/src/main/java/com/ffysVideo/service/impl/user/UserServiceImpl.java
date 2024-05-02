@@ -1,8 +1,8 @@
-package com.ffysVideo.service.impl;
+package com.ffysVideo.service.impl.user;
 
 import com.ffysVideo.entity.User;
 import com.ffysVideo.mapper.UserMapper;
-import com.ffysVideo.service.UserService;
+import com.ffysVideo.service.user.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

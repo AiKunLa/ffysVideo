@@ -1,7 +1,14 @@
 package com.ffysVideo;
 
-public class Main {
+
+import com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class FfysVideo {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        SpringApplication.run(FfysVideo.class, args);
+
     }
 }

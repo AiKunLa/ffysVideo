@@ -1,4 +1,4 @@
-package com.ffysVideo.service;
+package com.ffysVideo.service.user;
 
 import com.ffysVideo.entity.User;
 
